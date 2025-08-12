@@ -5,7 +5,7 @@ class Decorator extends Phaser.Physics.Arcade.Sprite {
         super(scene, x, y, 'decorator');
         scene.add.existing(this);
         scene.physics.add.existing(this);
-        this.setImmovable(true); // Decorators shouldn't move when collided with
+        this.setImmovable(true);
     }
 }
 
