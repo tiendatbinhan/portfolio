@@ -23,7 +23,7 @@ export class Preloader extends Scene
 
         this.load.image('walls', 'walls1.png');
         this.load.spritesheet('mainHallDecorator', 'sprites/mainHallDecorator.png', {frameWidth: 32, frameHeight: 32});
-        this.load.image('playerTexture', 'sprites/player.png'); //minimum working example
+        this.load.spritesheet('playerTexture', 'sprites/player.png', {frameWidth: 32, frameHeight: 32}); //minimum working example
         this.load.tilemapTiledJSON('map', 'map/map.json');
     }
 
