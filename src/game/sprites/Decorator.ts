@@ -1,9 +1,11 @@
-import { GameObjects } from "phaser";
+import Phaser from "phaser";
 
-class Decorator extends GameObjects.Sprite {
+class Decorator extends Phaser.Physics.Arcade.Sprite {
     constructor(scene: Phaser.Scene, x: number, y: number) {
         super(scene, x, y, 'decorator');
-        scene.add.existing(this)
+        scene.add.existing(this);
+        scene.physics.add.existing(this);
+        this.setImmovable(true);
     }
 }
 
