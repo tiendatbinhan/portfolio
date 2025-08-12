@@ -1,12 +1,19 @@
-import { GameObjects } from "phaser";
+import Phaser from "phaser";
 import { GAME_CONFIG } from "../configs";
 
-class InfoDisplayer extends GameObjects.Sprite {
+class InfoDisplayer extends Phaser.Physics.Arcade.Sprite {
     info: string;
+    key: any;
 
     constructor(scene: Phaser.Scene, x: number, y: number) {
         super(scene, x, y, 'texture');
         scene.add.existing(this);
+        scene.physics.add.existing(this);
+        this.setImmovable(true);
+
+        this.key = scene.input.keyboard?.addKeys({
+            interact: Phaser.Input.Keyboard.KeyCodes.F
+        })
     }
 
     setInfo(info: string) {
