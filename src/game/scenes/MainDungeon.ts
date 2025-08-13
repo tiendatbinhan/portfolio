@@ -82,7 +82,7 @@ export class MainDungeon extends Scene
         });
     }
 
-    update(time: number, delta: number): void {
+    update(_time: number, _delta: number): void {
         if (this.player) {
             this.player.update();
             this.updateInteractionText();
