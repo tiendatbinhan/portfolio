@@ -1,42 +1,50 @@
-name: Docker Image CI
+name: Deploy to GitHub Pages
 
 on:
   push:
     branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
 
 jobs:
-
   build:
-
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v4
-    - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag portfolio:alpha-0.1
+      - name: Checkout
+        uses: actions/checkout@v4
 
-    - name: Login Docker Hub
-      uses: docker/login-action@v2
-      with:
-        username: ${{ secrets.DOCKER_USERNAME }}
-        password: ${{ secrets.DOCKER_PASSWORD }}
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
 
-    - name: Push Docker Image
-      run: |
-        docker tag portfolio:alpha-0.1 ${{ secrets.DOCKER_USERNAME }}/portfolio:alpha-0.1
-        docker push ${{ secrets.DOCKER_USERNAME }}/portfolio:alpha-0.1
+      - name: Install dependencies
+        run: npm ci
 
-    - name: Create container and extract files
-      run: |
-        mkdir -p ./dist
-        docker create --name extract portfolio:alpha-0.1
-        docker cp extract:/usr/share/nginx/html ./dist
-        docker rm -f extract
-        
-    - name: Deploy to GitHub Pages
-      uses: peaceiris/actions-gh-pages@v3
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./dist/html
+      - name: Build
+        run: npm run build
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./dist
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
