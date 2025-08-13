@@ -457,6 +457,17 @@
                  "id":32,
                  "name":"",
                  "point":true,
+                 "properties":[
+                        {
+                         "name":"info",
+                         "type":"string",
+                         "value":"Loris Ipsum"
+                        }, 
+                        {
+                         "name":"title",
+                         "type":"string",
+                         "value":"Clash Origin"
+                        }],
                  "rotation":0,
                  "type":"InfoDisplayer",
                  "visible":true,
@@ -469,6 +480,17 @@
                  "id":33,
                  "name":"",
                  "point":true,
+                 "properties":[
+                        {
+                         "name":"info",
+                         "type":"string",
+                         "value":"Loris Ipsum"
+                        }, 
+                        {
+                         "name":"title",
+                         "type":"string",
+                         "value":"Optimization History"
+                        }],
                  "rotation":0,
                  "type":"InfoDisplayer",
                  "visible":true,

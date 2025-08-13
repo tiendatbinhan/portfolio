@@ -22,8 +22,12 @@ export class Preloader extends Scene
         this.load.setPath('assets');
 
         this.load.image('walls', 'walls1.png');
+
         this.load.spritesheet('mainHallDecorator', 'sprites/mainHallDecorator.png', {frameWidth: 32, frameHeight: 32});
         this.load.spritesheet('playerTexture', 'sprites/player.png', {frameWidth: 32, frameHeight: 32}); //minimum working example
+
+        this.load.atlasXML('gui', 'ui/spritesheet-default.png', 'ui/spritesheet-default.xml');
+        
         this.load.tilemapTiledJSON('map', 'map/map.json');
     }
 
