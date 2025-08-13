@@ -31,7 +31,7 @@ jobs:
     - name: Create container and extract files
       run: |
         mkdir -p ./dist
-        docker create --name extract portfolio
+        docker create --name extract portfolio:alpha-0.1
         docker cp extract:/usr/share/nginx/html ./dist
         docker rm -f extract
         
