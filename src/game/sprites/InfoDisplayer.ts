@@ -35,6 +35,6 @@ export class InfoDisplayer extends Phaser.Physics.Arcade.Sprite {
     }
 
     onInteract() {
-        this.scene.scene.start('DisplayInfo', {info: this.info})
+        this.scene.scene.start('DisplayInfoHUDScene', {info: this.info, title: this.title})
     }
 }

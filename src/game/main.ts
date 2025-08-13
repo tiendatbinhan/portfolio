@@ -1,6 +1,7 @@
 import { Boot } from './scenes/Boot';
 import { MainDungeon } from './scenes/MainDungeon';
 import { HUDScene } from './scenes/HUDScene';
+import { DisplayInfoHUDScene } from './scenes/DisplayInfoHUDScene';
 import { AUTO, Game } from 'phaser';
 import { Preloader } from './scenes/Preloader';
 import { GAME_CONFIG } from './configs';
@@ -17,7 +18,8 @@ const config: Phaser.Types.Core.GameConfig = {
         Boot,
         Preloader,
         MainDungeon,
-        HUDScene
+        HUDScene,
+        DisplayInfoHUDScene
     ],
     physics: {
         default: 'arcade',
