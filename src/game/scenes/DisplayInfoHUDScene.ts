@@ -1,6 +1,6 @@
 import { Scene } from "phaser";
 
-export class DisplayInfo extends Scene
+export class DisplayInfoHUDScene extends Scene
 {
     info: string;
 

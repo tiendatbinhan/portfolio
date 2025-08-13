@@ -11,19 +11,15 @@ export class HUDScene extends Scene {
     }
 
     create() {
-        // Set HUD height to 1/6 of game height
         this.hudHeight = GAME_CONFIG.HEIGHT / 6;
 
-        // Listen for events from MainDungeon scene using global game events
         this.game.events.on('updateInteractionText', this.updateInteractionText, this);
     }
 
     updateInteractionText(interactableDisplayers: string[]): void {
-        // Clear existing buttons and texts
         this.clearInteractionUI();
 
         if (interactableDisplayers.length > 0) {
-            // Create separate button for each interaction
             const buttonWidth = 200;
             const buttonHeight = 48;
             const spacing = 20;
@@ -34,12 +30,9 @@ export class HUDScene extends Scene {
             interactableDisplayers.forEach((title, index) => {
                 const x = startX + index * (buttonWidth + spacing) + buttonWidth / 2;
 
-                // Create button panel
                 const button = this.add.sprite(x, y, 'gui', 'panel_brownimg.png');
                 button.setDepth(1000);
-                button.setScale(buttonWidth / 64, buttonHeight / 64); // 64x64 is the original panel size
-
-                // Create text for this button
+                button.setScale(buttonWidth / 64, buttonHeight / 64);
                 const text = this.add.text(x, y, title, {
                     fontSize: '16px',
                     color: '#000000',
@@ -55,7 +48,6 @@ export class HUDScene extends Scene {
     }
 
     private clearInteractionUI(): void {
-        // Remove all existing buttons and texts
         this.interactionButtons.forEach(button => button.destroy());
         this.interactionTexts.forEach(text => text.destroy());
         this.interactionButtons = [];
