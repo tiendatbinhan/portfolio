@@ -46,7 +46,7 @@ export class DisplayInfoHUDScene extends Scene {
         this.titleText = this.add.text(bannerX, bannerY, '', {
             fontSize: '24px',
             color: '#000000',
-            fontFamily: 'Arial',
+            fontFamily: 'DungeonCrawler',
             fontStyle: 'bold'
         });
         this.titleText.setOrigin(0.5);
@@ -57,7 +57,7 @@ export class DisplayInfoHUDScene extends Scene {
         this.infoText = this.add.text(panelX, panelY, '', {
             fontSize: '18px',
             color: '#000000',
-            fontFamily: 'Arial',
+            fontFamily: 'PixelPurl',
             wordWrap: { width: panelWidth - 120 } // Reduced width to make room for scroll buttons
         });
         this.infoText.setOrigin(0.5);
@@ -77,7 +77,7 @@ export class DisplayInfoHUDScene extends Scene {
         this.scrollUpText = this.add.text(scrollButtonX, scrollUpY, '↑', {
             fontSize: '16px',
             color: '#000000',
-            fontFamily: 'Arial'
+            fontFamily: 'PixelPurl'
         });
         this.scrollUpText.setOrigin(0.5);
         this.scrollUpText.setDepth(2002);
@@ -93,7 +93,7 @@ export class DisplayInfoHUDScene extends Scene {
         this.scrollDownText = this.add.text(scrollButtonX, scrollDownY, '↓', {
             fontSize: '16px',
             color: '#000000',
-            fontFamily: 'Arial'
+            fontFamily: 'PixelPurl'
         });
         this.scrollDownText.setOrigin(0.5);
         this.scrollDownText.setDepth(2002);
@@ -110,7 +110,7 @@ export class DisplayInfoHUDScene extends Scene {
         this.closeText = this.add.text(panelX, panelY + 150, 'Close', {
             fontSize: '16px',
             color: '#000000',
-            fontFamily: 'Arial'
+            fontFamily: 'PixelPurl'
         });
         this.closeText.setOrigin(0.5);
         this.closeText.setDepth(2002);

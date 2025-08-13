@@ -36,7 +36,7 @@ export class HUDScene extends Scene {
                 const text = this.add.text(x, y, title, {
                     fontSize: '16px',
                     color: '#000000',
-                    fontFamily: 'Arial'
+                    fontFamily: 'PixelPurl'
                 });
                 text.setOrigin(0.5);
                 text.setDepth(1001);
