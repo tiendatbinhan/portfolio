@@ -1,3 +1,17 @@
+@font-face {
+    font-family: 'PixelPurl';
+    src: url('./assets/fonts/PixelPurl.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'DungeonCrawler';
+    src: url('./assets/fonts/Dungeon Crawler CB.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
 body {
     margin: 0;
     padding: 0;
