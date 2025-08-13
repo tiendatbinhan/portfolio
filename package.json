@@ -12,7 +12,7 @@
     "bugs": {
         "url": "https://github.com/phaserjs/template-vite-ts/issues"
     },
-    "homepage": "https://github.com/phaserjs/template-vite-ts#readme",
+    "homepage": "https://tien-dat-nguyen.io/portfolio",
     "scripts": {
         "dev": "node log.js dev & vite --config vite/config.dev.mjs",
         "build": "node log.js build & vite build --config vite/config.prod.mjs",
