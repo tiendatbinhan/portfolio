@@ -25,5 +25,5 @@ jobs:
 
     - name: Push Docker Image
       run: |
-        docker tag myapp:latest ${{ secrets.DOCKER_USERNAME }}/portfolio:alpha-0.1
+        docker tag portfolio:alpha-0.1 ${{ secrets.DOCKER_USERNAME }}/portfolio:alpha-0.1
         docker push ${{ secrets.DOCKER_USERNAME }}/portfolio:alpha-0.1
