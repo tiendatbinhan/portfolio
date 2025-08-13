@@ -1,13 +1,28 @@
 import { Scene } from "phaser";
 import { MainHallDecorator } from "../sprites/Decorator";
+import { Player } from "../sprites/Player";
+import { InfoDisplayer } from "../sprites/InfoDisplayer";
+import { GAME_CONFIG } from "../configs";
 
 export class MainDungeon extends Scene
 {
+    player: Player;
+    decorators: MainHallDecorator[] = [];
+    infoDisplayers: InfoDisplayer[] = [];
+
     constructor() {
         super('MainDungeon');
     }
 
     create() {
+        // Launch HUD scene and ensure it's active
+        this.scene.launch('HUDScene');
+        this.scene.bringToTop('HUDScene');
+        
+        // Launch DisplayInfoHUDScene
+        this.scene.launch('DisplayInfoHUDScene');
+        this.scene.bringToTop('DisplayInfoHUDScene');
+
         const map = this.make.tilemap({ key: 'map' });
         const wallSet = map.addTilesetImage('walls1', 'walls');
 
@@ -29,8 +44,83 @@ export class MainDungeon extends Scene
                         p.name === 'type' && p.value === 'mainhall'
                 )
             ) {
-                new MainHallDecorator(this, obj.x ?? 0, obj.y ?? 0);
+                const decorator = new MainHallDecorator(this, obj.x ?? 0, obj.y ?? 0);
+                this.decorators.push(decorator);
             }
-        })
+
+            if (obj.type === 'InfoDisplayer') {
+                const title = obj.properties?.find((p: { name: string; value: unknown }) => p.name === 'title')?.value as string || 'Info';
+                const info = obj.properties?.find((p: { name: string; value: unknown }) => p.name === 'info')?.value as string || 'No information available.';
+                const infoDisplayer = new InfoDisplayer(this, obj.x ?? 0, obj.y ?? 0, title);
+                infoDisplayer.setInfo(info);
+                this.infoDisplayers.push(infoDisplayer);
+            }
+
+            if (obj.type === 'Player') {
+                this.player = new Player(this, obj.x ?? 0, obj.y ?? 0);
+                this.cameras.main.startFollow(this.player);
+            }
+        });
+
+        if (this.player && mapLayer) {
+            this.physics.add.collider(this.player, mapLayer);
+        }
+
+        if (this.player) {
+            this.decorators.forEach(decorator => {
+                this.physics.add.collider(this.player, decorator);
+            });
+            
+            this.infoDisplayers.forEach(infoDisplayer => {
+                this.physics.add.collider(this.player, infoDisplayer);
+            });
+        }
+
+        // Add keyboard input for interaction
+        this.input.keyboard?.on('keydown-F', () => {
+            this.handleInteraction();
+        });
+    }
+
+    update(_time: number, _delta: number): void {
+        if (this.player) {
+            this.player.update();
+            this.updateInteractionText();
+        }
+    }
+
+    private updateInteractionText(): void {
+        if (!this.player) return;
+
+        const playerTileX = Math.floor(this.player.x / GAME_CONFIG.TILE_SIZE);
+        const playerTileY = Math.floor(this.player.y / GAME_CONFIG.TILE_SIZE);
+
+        const interactableDisplayers = this.infoDisplayers
+            .filter(displayer => displayer.canInteract(playerTileX, playerTileY))
+            .map(displayer => displayer.title);
+
+        this.game.events.emit('updateInteractionText', interactableDisplayers);
+        
+        const hudScene = this.scene.get('HUDScene');
+        if (hudScene && hudScene.scene.isActive()) {
+            (hudScene as any).updateInteractionText(interactableDisplayers);
+        }
+    }
+
+    private handleInteraction(): void {
+        if (!this.player) return;
+
+        const playerTileX = Math.floor(this.player.x / GAME_CONFIG.TILE_SIZE);
+        const playerTileY = Math.floor(this.player.y / GAME_CONFIG.TILE_SIZE);
+
+        // Find the first interactable InfoDisplayer
+        const interactableDisplayer = this.infoDisplayers.find(displayer => 
+            displayer.canInteract(playerTileX, playerTileY)
+        );
+
+        if (interactableDisplayer) {
+            // Show the dialog with the InfoDisplayer's title and info
+            this.game.events.emit('showInfoDialog', interactableDisplayer.title, interactableDisplayer.info);
+        }
     }
 }
