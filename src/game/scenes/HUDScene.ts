@@ -2,7 +2,7 @@ import { Scene } from "phaser";
 import { GAME_CONFIG } from "../configs";
 
 export class HUDScene extends Scene {
-    private interactionButtons: Phaser.GameObjects.Sprite[] = [];
+    private interactionButtons: Phaser.GameObjects.NineSlice[] = [];
     private interactionTexts: Phaser.GameObjects.Text[] = [];
     private hudHeight: number;
 
@@ -30,9 +30,20 @@ export class HUDScene extends Scene {
             interactableDisplayers.forEach((title, index) => {
                 const x = startX + index * (buttonWidth + spacing) + buttonWidth / 2;
 
-                const button = this.add.sprite(x, y, 'gui', 'panel_brownimg.png');
+                const button = this.add.nineslice(
+                    x, 
+                    y, 
+                    'gui', 
+                    'panel_brownimg.png', 
+                    buttonWidth, 
+                    buttonHeight, 
+                    16, 
+                    16, 
+                    16, 
+                    16
+                );
                 button.setDepth(1000);
-                button.setScale(buttonWidth / 64, buttonHeight / 64);
+                
                 const text = this.add.text(x, y, title, {
                     fontSize: '16px',
                     color: '#000000',
