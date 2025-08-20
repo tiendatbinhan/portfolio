@@ -3,3 +3,10 @@ export const GAME_CONFIG = {
     WIDTH: 1024,
     HEIGHT: 768
 };
+
+export enum DIRECTION {
+    "DOWN",
+    "LEFT",
+    "RIGHT",
+    "UP"
+}

@@ -2,14 +2,14 @@ import { Scene } from "phaser";
 import { GAME_CONFIG } from "../configs";
 
 export class DisplayInfoHUDScene extends Scene {
-    private dialogPanel: Phaser.GameObjects.Sprite | null = null;
+    private dialogPanel: Phaser.GameObjects.NineSlice | null = null;
     private titleBanner: Phaser.GameObjects.Sprite | null = null;
     private titleText: Phaser.GameObjects.Text | null = null;
     private infoText: Phaser.GameObjects.Text | null = null;
-    private closeButton: Phaser.GameObjects.Sprite | null = null;
+    private closeButton: Phaser.GameObjects.NineSlice | null = null;
     private closeText: Phaser.GameObjects.Text | null = null;
-    private scrollUpButton: Phaser.GameObjects.Sprite | null = null;
-    private scrollDownButton: Phaser.GameObjects.Sprite | null = null;
+    private scrollUpButton: Phaser.GameObjects.NineSlice | null = null;
+    private scrollDownButton: Phaser.GameObjects.NineSlice | null = null;
     private scrollUpText: Phaser.GameObjects.Text | null = null;
     private scrollDownText: Phaser.GameObjects.Text | null = null;
     private scrollY: number = 0;
@@ -27,9 +27,19 @@ export class DisplayInfoHUDScene extends Scene {
         const panelY = GAME_CONFIG.HEIGHT / 2;
 
         // Create main dialog panel
-        this.dialogPanel = this.add.sprite(panelX, panelY, 'gui', 'panel_brownimg.png');
+        this.dialogPanel = this.add.nineslice(
+            panelX,
+            panelY,
+            'gui',
+            'panel_brownimg.png',
+            panelWidth,
+            panelHeight,
+            16,
+            16,
+            16,
+            16
+        );
         this.dialogPanel.setDepth(2000);
-        this.dialogPanel.setScale(panelWidth / 64, panelHeight / 64);
         this.dialogPanel.setVisible(false);
 
         // Create title banner
@@ -69,9 +79,19 @@ export class DisplayInfoHUDScene extends Scene {
         const scrollButtonHeight = 40;
         const scrollButtonX = panelX + (panelWidth / 2) - 30;
         const scrollUpY = panelY - 50;
-        this.scrollUpButton = this.add.sprite(scrollButtonX, scrollUpY, 'gui', 'button_brownimg.png');
+        this.scrollUpButton = this.add.nineslice(
+            scrollButtonX,
+            scrollUpY,
+            'gui',
+            'button_brownimg.png',
+            scrollButtonWidth,
+            scrollButtonHeight,
+            16,
+            16,
+            0,
+            0
+        );
         this.scrollUpButton.setDepth(2001);
-        this.scrollUpButton.setScale(scrollButtonWidth / 48, scrollButtonHeight / 24);
         this.scrollUpButton.setVisible(false);
 
         this.scrollUpText = this.add.text(scrollButtonX, scrollUpY, '↑', {
@@ -85,9 +105,19 @@ export class DisplayInfoHUDScene extends Scene {
 
         // Create scroll down button
         const scrollDownY = panelY + 50;
-        this.scrollDownButton = this.add.sprite(scrollButtonX, scrollDownY, 'gui', 'button_brownimg.png');
+        this.scrollDownButton = this.add.nineslice(
+            scrollButtonX,
+            scrollDownY,
+            'gui',
+            'button_brownimg.png',
+            scrollButtonWidth,
+            scrollButtonHeight,
+            16,
+            16,
+            0,
+            0
+        );
         this.scrollDownButton.setDepth(2001);
-        this.scrollDownButton.setScale(scrollButtonWidth / 48, scrollButtonHeight / 24);
         this.scrollDownButton.setVisible(false);
 
         this.scrollDownText = this.add.text(scrollButtonX, scrollDownY, '↓', {
@@ -102,9 +132,19 @@ export class DisplayInfoHUDScene extends Scene {
         // Create close button
         const closeButtonWidth = 100;
         const closeButtonHeight = 40;
-        this.closeButton = this.add.sprite(panelX, panelY + 150, 'gui', 'button_brownimg.png');
+        this.closeButton = this.add.nineslice(
+            panelX,
+            panelY + 150,
+            'gui',
+            'button_brownimg.png',
+            closeButtonWidth,
+            closeButtonHeight,
+            16,
+            16,
+            0,
+            0
+        );
         this.closeButton.setDepth(2001);
-        this.closeButton.setScale(closeButtonWidth / 48, closeButtonHeight / 24); // 48x24 is button size
         this.closeButton.setVisible(false);
 
         this.closeText = this.add.text(panelX, panelY + 150, 'Close', {
