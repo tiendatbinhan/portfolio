@@ -2,7 +2,7 @@ import { Scene } from "phaser";
 import { GAME_CONFIG } from "../configs";
 
 export class DisplayInfoHUDScene extends Scene {
-    private dialogPanel: Phaser.GameObjects.Sprite | null = null;
+    private dialogPanel: Phaser.GameObjects.NineSlice | null = null;
     private titleBanner: Phaser.GameObjects.Sprite | null = null;
     private titleText: Phaser.GameObjects.Text | null = null;
     private infoText: Phaser.GameObjects.Text | null = null;
@@ -27,9 +27,19 @@ export class DisplayInfoHUDScene extends Scene {
         const panelY = GAME_CONFIG.HEIGHT / 2;
 
         // Create main dialog panel
-        this.dialogPanel = this.add.sprite(panelX, panelY, 'gui', 'panel_brownimg.png');
+        this.dialogPanel = this.add.nineslice(
+            panelX,
+            panelY,
+            'gui',
+            'panel_brownimg.png',
+            panelWidth,
+            panelHeight,
+            16,
+            16,
+            16,
+            16
+        );
         this.dialogPanel.setDepth(2000);
-        this.dialogPanel.setScale(panelWidth / 64, panelHeight / 64);
         this.dialogPanel.setVisible(false);
 
         // Create title banner
