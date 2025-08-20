@@ -75,7 +75,7 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
             this.lastMoveDirection = DIRECTION.DOWN;
         }
     
-        if (moving && this.body && this.body.velocity.x !== 0 && this.body.velocity.y !== 0) {
+        if (moving && this.body && horizontalMove && verticalMove) {
             this.body.velocity.normalize().scale(this.speed);
         }
 
