@@ -54,6 +54,9 @@ export class MainDungeon extends Scene
                 const infoDisplayer = new InfoDisplayer(this, obj.x ?? 0, obj.y ?? 0, title);
                 infoDisplayer.setInfo(info);
                 this.infoDisplayers.push(infoDisplayer);
+
+                const chamber = obj.properties?.find((p: { name: string; value: unknown }) => p.name === 'chamber')?.value as number || 0;
+                infoDisplayer.setTextureByChamber(chamber)
             }
 
             if (obj.type === 'Player') {

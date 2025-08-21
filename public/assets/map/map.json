@@ -459,6 +459,11 @@
                  "point":true,
                  "properties":[
                         {
+                         "name":"chamber",
+                         "type":"int",
+                         "value":1
+                        }, 
+                        {
                          "name":"info",
                          "type":"string",
                          "value":"The dungeon master ranks in the top 0.1% of Clash of Code players. While not claiming to be the best, he delivers strong performance when it matters."
@@ -481,6 +486,11 @@
                  "name":"",
                  "point":true,
                  "properties":[
+                        {
+                         "name":"chamber",
+                         "type":"int",
+                         "value":1
+                        }, 
                         {
                          "name":"info",
                          "type":"string",
