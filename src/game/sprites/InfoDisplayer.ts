@@ -37,4 +37,12 @@ export class InfoDisplayer extends Phaser.Physics.Arcade.Sprite {
     onInteract() {
         this.scene.scene.start('DisplayInfoHUDScene', {info: this.info, title: this.title})
     }
+
+    setTextureByChamber(chamber?: number) {
+        switch (chamber) {
+            case 1:
+                this.setTexture('treasureChests', 0);
+                break;
+        }
+    }
 }

@@ -24,6 +24,7 @@ export class Preloader extends Scene
         this.load.image('walls', 'walls1.png');
 
         this.load.spritesheet('mainHallDecorator', 'sprites/mainHallDecorator.png', {frameWidth: 32, frameHeight: 32});
+        this.load.spritesheet('treasureChests', 'sprites/treasureChests.png', {frameWidth: 32, frameHeight: 32})
         this.load.spritesheet('playerTextureIdle', 'sprites/player_idle.png', {frameWidth: 64, frameHeight: 64});
         this.load.spritesheet('playerTextureWalk', 'sprites/player_walk.png', {frameWidth: 64, frameHeight: 64});
 
