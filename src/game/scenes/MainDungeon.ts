@@ -9,6 +9,7 @@ export class MainDungeon extends Scene
     player: Player;
     decorators: MainHallDecorator[] = [];
     infoDisplayers: InfoDisplayer[] = [];
+    navmesh: any;
 
     constructor() {
         super('MainDungeon');
@@ -82,6 +83,18 @@ export class MainDungeon extends Scene
         // Add keyboard input for interaction
         this.input.keyboard?.on('keydown-F', () => {
             this.handleInteraction();
+        });
+
+        this.navmesh = this.navMeshPlugin.buildMeshFromTilemap("mesh", map, [mapLayer], undefined, 16);
+
+        this.input.on('pointerdown', (pointer: Phaser.Input.Pointer) => {
+            if (pointer.leftButtonDown() && this.player && this.navmesh) {
+                const worldPoint = pointer.positionToCamera(this.cameras.main) || pointer;
+                const path = this.navmesh.findPath({ x: this.player.x, y: this.player.y }, { x: worldPoint.x, y: worldPoint.y });
+                if (path && path.length > 0) {
+                    this.player.moveByPixel(path);
+                }
+            }
         });
     }
 

@@ -5,6 +5,7 @@ import { DisplayInfoHUDScene } from './scenes/DisplayInfoHUDScene';
 import { AUTO, Game } from 'phaser';
 import { Preloader } from './scenes/Preloader';
 import { GAME_CONFIG } from './configs';
+import { PhaserNavMeshPlugin } from "phaser-navmesh/src";
 
 //  Find out more information about the Game Config at:
 //  https://docs.phaser.io/api-documentation/typedef/types-core#gameconfig
@@ -14,6 +15,16 @@ const config: Phaser.Types.Core.GameConfig = {
     height: GAME_CONFIG.HEIGHT,
     parent: 'game-container',
     backgroundColor: '#000000',
+    plugins: {
+        scene: [
+            {
+                key: "PhaserNavMeshPlugin",
+                plugin: PhaserNavMeshPlugin,
+                mapping: "navMeshPlugin",
+                start: true
+            }
+        ]
+    },
     scene: [
         Boot,
         Preloader,
@@ -27,7 +38,7 @@ const config: Phaser.Types.Core.GameConfig = {
     },
     render: {
         transparent: true
-    }
+    },
 };
 
 const StartGame = (parent: string) => {

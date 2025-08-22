@@ -6,6 +6,9 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
     private speed: number = 200;
     private direction: number = DIRECTION.DOWN;
     private lastMoveDirection: number = DIRECTION.DOWN;
+    private path: Phaser.Geom.Point[] = [];
+    private pathIndex: number = 0;
+    private movingByPath: boolean = false;
 
     constructor(scene: Phaser.Scene, x: number, y: number) {
         super(scene, x, y, 'playerTextureIdle', 0);
@@ -45,6 +48,38 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
     }
 
     update() {
+        if (this.movingByPath && this.path && this.pathIndex < this.path.length) {
+            const target = this.path[this.pathIndex];
+            const dx = target.x - this.x;
+            const dy = target.y - this.y;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            const threshold = 4; // pixels
+            if (dist < threshold) {
+                this.setVelocity(0);
+                this.pathIndex++;
+                if (this.pathIndex >= this.path.length) {
+                    this.movingByPath = false;
+                    this.setVelocity(0);
+                    this.anims.play(`idle_${this.lastMoveDirection}`, true);
+                }
+            } else {
+
+                const angle = Math.atan2(dy, dx);
+                this.setVelocity(Math.cos(angle) * this.speed, Math.sin(angle) * this.speed);
+
+                let dir = this.lastMoveDirection;
+                if (Math.abs(dx) > Math.abs(dy)) {
+                    dir = dx > 0 ? DIRECTION.RIGHT : DIRECTION.LEFT;
+                } else {
+                    dir = dy > 0 ? DIRECTION.DOWN : DIRECTION.UP;
+                }
+                this.direction = dir;
+                this.lastMoveDirection = dir;
+                this.anims.play(`walk_${this.direction}`, true);
+            }
+            return;
+        }
+
         this.setVelocity(0);
     
         let moving = false;
@@ -85,5 +120,18 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
         } else {
             this.anims.play(`idle_${this.lastMoveDirection}`, true);
         }
+    }
+
+    cancelPath() {
+        this.movingByPath = false;
+        this.setVelocity(0);
+        this.anims.play(`idle_${this.lastMoveDirection}`, true);
+    }
+
+    moveByPixel(path: Phaser.Geom.Point[]) {
+        if (!path || path.length === 0) return;
+        this.path = path;
+        this.pathIndex = 0;
+        this.movingByPath = true;
     }
 }
