@@ -43,6 +43,9 @@ export class InfoDisplayer extends Phaser.Physics.Arcade.Sprite {
             case 1:
                 this.setTexture('treasureChests', 0);
                 break;
+            case 2:
+                this.setTexture('treasureChests', 61);
+                break;
         }
     }
 }
