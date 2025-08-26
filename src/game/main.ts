@@ -5,7 +5,7 @@ import { DisplayInfoHUDScene } from './scenes/DisplayInfoHUDScene';
 import { AUTO, Game } from 'phaser';
 import { Preloader } from './scenes/Preloader';
 import { GAME_CONFIG } from './configs';
-import { PhaserNavMeshPlugin } from "phaser-navmesh/src";
+import { PhaserNavMeshPlugin } from "phaser-navmesh";
 import { InputScene } from './scenes/InputScene';
 
 //  Find out more information about the Game Config at:
