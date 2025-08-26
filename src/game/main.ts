@@ -6,6 +6,7 @@ import { AUTO, Game } from 'phaser';
 import { Preloader } from './scenes/Preloader';
 import { GAME_CONFIG } from './configs';
 import { PhaserNavMeshPlugin } from "phaser-navmesh/src";
+import { InputScene } from './scenes/InputScene';
 
 //  Find out more information about the Game Config at:
 //  https://docs.phaser.io/api-documentation/typedef/types-core#gameconfig
@@ -29,8 +30,9 @@ const config: Phaser.Types.Core.GameConfig = {
         Boot,
         Preloader,
         MainDungeon,
+        DisplayInfoHUDScene,
         HUDScene,
-        DisplayInfoHUDScene
+        InputScene
     ],
     physics: {
         default: 'arcade',
