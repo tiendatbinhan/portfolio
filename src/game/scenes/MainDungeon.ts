@@ -1,142 +1,98 @@
 import { Scene } from "phaser";
-import { MainHallDecorator } from "../sprites/Decorator";
-import { Player } from "../sprites/Player";
-import { InfoDisplayer } from "../sprites/InfoDisplayer";
-import { GAME_CONFIG } from "../configs";
+import { 
+    SceneManager, 
+    MapManager, 
+    ObjectManager, 
+    PhysicsManager, 
+    InteractionManager, 
+    NavigationManager, 
+} from "../managers";
 
-export class MainDungeon extends Scene
-{
-    player: Player;
-    decorators: MainHallDecorator[] = [];
-    infoDisplayers: InfoDisplayer[] = [];
-    navmesh: any;
+export class MainDungeon extends Scene {
+    private sceneManager: SceneManager;
+    private mapManager: MapManager;
+    private objectManager: ObjectManager;
+    private physicsManager: PhysicsManager;
+    private interactionManager: InteractionManager | null = null;
+    private navigationManager: NavigationManager | null = null;
 
     constructor() {
         super('MainDungeon');
     }
 
     create() {
-        // Launch HUD scene and ensure it's active
-        this.scene.launch('HUDScene');
-        this.scene.bringToTop('HUDScene');
+        // Initialize managers
+        this.sceneManager = new SceneManager(this);
+        this.mapManager = new MapManager(this);
+        this.objectManager = new ObjectManager(this);
+        this.physicsManager = new PhysicsManager(this);
         
-        // Launch DisplayInfoHUDScene
-        this.scene.launch('DisplayInfoHUDScene');
-        this.scene.bringToTop('DisplayInfoHUDScene');
-
-        const map = this.make.tilemap({ key: 'map' });
-        const wallSet = map.addTilesetImage('walls1', 'walls');
-
-        if (wallSet == null) {
-            console.log('Cannot load the tileset.');
-            return
-        }
-
-        const mapLayer = map.createLayer('Tile Layer 1', wallSet, 0, 0);
-        mapLayer?.setCollisionByProperty({"walkable": false});
-
-        const objectLayer = map.getObjectLayer('Object Layer 1')?.objects;
-        objectLayer?.forEach(obj => {
-            if (
-                obj.type === 'Decorator' &&
-                Array.isArray(obj.properties) &&
-                obj.properties.some(
-                    (p: { name: string; value: unknown }) =>
-                        p.name === 'type' && p.value === 'mainhall'
-                )
-            ) {
-                const decorator = new MainHallDecorator(this, obj.x ?? 0, obj.y ?? 0);
-                this.decorators.push(decorator);
-            }
-
-            if (obj.type === 'InfoDisplayer') {
-                const title = obj.properties?.find((p: { name: string; value: unknown }) => p.name === 'title')?.value as string || 'Info';
-                const info = obj.properties?.find((p: { name: string; value: unknown }) => p.name === 'info')?.value as string || 'No information available.';
-                const infoDisplayer = new InfoDisplayer(this, obj.x ?? 0, obj.y ?? 0, title);
-                infoDisplayer.setInfo(info);
-                this.infoDisplayers.push(infoDisplayer);
-
-                const chamber = obj.properties?.find((p: { name: string; value: unknown }) => p.name === 'chamber')?.value as number || 0;
-                infoDisplayer.setTextureByChamber(chamber)
-            }
-
-            if (obj.type === 'Player') {
-                this.player = new Player(this, obj.x ?? 0, obj.y ?? 0);
-                this.cameras.main.startFollow(this.player);
-            }
+        // Launch HUD scenes
+        this.sceneManager.launchHUDScenes();
+        
+        // Create map
+        const mapLayer = this.mapManager.createMap({
+            mapKey: 'map',
+            tilesetName: 'walls1',
+            tilesetKey: 'walls',
+            layerName: 'Tile Layer 1',
+            objectLayerName: 'Object Layer 1'
         });
-
-        if (this.player && mapLayer) {
-            this.physics.add.collider(this.player, mapLayer);
+        
+        if (!mapLayer) {
+            console.error('Failed to create map layer');
+            return;
         }
-
-        if (this.player) {
-            this.decorators.forEach(decorator => {
-                this.physics.add.collider(this.player, decorator);
-            });
+        
+        // Process objects from map
+        const objectLayer = this.mapManager.getObjectLayer('Object Layer 1');
+        if (objectLayer) {
+            this.objectManager.processObjects(objectLayer);
+        }
+        
+        const player = this.objectManager.getPlayer();
+        if (player) {
+            // Setup camera to follow player
+            this.cameras.main.startFollow(player);
             
-            this.infoDisplayers.forEach(infoDisplayer => {
-                this.physics.add.collider(this.player, infoDisplayer);
-            });
-        }
-
-        // Add keyboard input for interaction
-        this.input.keyboard?.on('keydown-F', () => {
-            this.handleInteraction();
-        });
-
-        this.navmesh = this.navMeshPlugin.buildMeshFromTilemap("mesh", map, [mapLayer], undefined, 16);
-
-        this.input.on('pointerdown', (pointer: Phaser.Input.Pointer) => {
-            if (pointer.leftButtonDown() && this.player && this.navmesh) {
-                const worldPoint = pointer.positionToCamera(this.cameras.main) || pointer;
-                const path = this.navmesh.findPath({ x: this.player.x, y: this.player.y }, { x: worldPoint.x, y: worldPoint.y });
-                if (path && path.length > 0) {
-                    this.player.moveByPixel(path);
-                }
+            // Setup physics collisions
+            this.physicsManager.setupCollisions(
+                player,
+                mapLayer,
+                this.objectManager.getDecorators(),
+                this.objectManager.getInfoDisplayers()
+            );
+            
+            // Setup interaction system
+            this.interactionManager = new InteractionManager(
+                this,
+                player,
+                this.objectManager.getInfoDisplayers()
+            );
+            
+            // Build navmesh and setup navigation
+            const navmesh = this.mapManager.buildNavMesh();
+            if (navmesh) {
+                this.navigationManager = new NavigationManager(this, player, navmesh);
             }
-        });
+        }
+        
+        // Listen for scene shutdown to cleanup
+        this.events.once('shutdown', this.onShutdown, this);
     }
 
     update(_time: number, _delta: number): void {
-        if (this.player) {
-            this.player.update();
-            this.updateInteractionText();
+        const player = this.objectManager.getPlayer();
+        if (player) {
+            player.update();
+            this.interactionManager?.updateInteractionText();
         }
     }
-
-    private updateInteractionText(): void {
-        if (!this.player) return;
-
-        const playerTileX = Math.floor(this.player.x / GAME_CONFIG.TILE_SIZE);
-        const playerTileY = Math.floor(this.player.y / GAME_CONFIG.TILE_SIZE);
-
-        const interactableDisplayers = this.infoDisplayers
-            .filter(displayer => displayer.canInteract(playerTileX, playerTileY))
-            .map(displayer => displayer.title);
-
-        this.game.events.emit('updateInteractionText', interactableDisplayers);
-        
-        const hudScene = this.scene.get('HUDScene');
-        if (hudScene && hudScene.scene.isActive()) {
-            (hudScene as any).updateInteractionText(interactableDisplayers);
-        }
-    }
-
-    private handleInteraction(): void {
-        if (!this.player) return;
-
-        const playerTileX = Math.floor(this.player.x / GAME_CONFIG.TILE_SIZE);
-        const playerTileY = Math.floor(this.player.y / GAME_CONFIG.TILE_SIZE);
-
-        // Find the first interactable InfoDisplayer
-        const interactableDisplayer = this.infoDisplayers.find(displayer => 
-            displayer.canInteract(playerTileX, playerTileY)
-        );
-
-        if (interactableDisplayer) {
-            // Show the dialog with the InfoDisplayer's title and info
-            this.game.events.emit('showInfoDialog', interactableDisplayer.title, interactableDisplayer.info);
-        }
+    
+    private onShutdown(): void {
+        // Clean up managers when scene is shut down
+        this.interactionManager?.destroy();
+        // Remove the shutdown listener to prevent memory leaks
+        this.events.off('shutdown', this.onShutdown, this);
     }
 }

@@ -35,7 +35,7 @@ export class InfoDisplayer extends Phaser.Physics.Arcade.Sprite {
     }
 
     onInteract() {
-        this.scene.scene.start('DisplayInfoHUDScene', {info: this.info, title: this.title})
+        this.scene.game.events.emit('showInfoDialog', this.title, this.info);
     }
 
     setTextureByChamber(chamber?: number) {
