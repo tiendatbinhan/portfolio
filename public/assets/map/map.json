@@ -61,23 +61,55 @@
                  "id":4,
                  "name":"",
                  "point":true,
+                 "properties":[
+                        {
+                         "name":"chamber",
+                         "type":"int",
+                         "value":2
+                        }, 
+                        {
+                         "name":"info",
+                         "type":"string",
+                         "value":"Most recent language used by the dungeon master. A powerful tool for web programming."
+                        }, 
+                        {
+                         "name":"title",
+                         "type":"string",
+                         "value":"TypeScript"
+                        }],
                  "rotation":0,
                  "type":"InfoDisplayer",
                  "visible":true,
                  "width":0,
-                 "x":655,
-                 "y":719
+                 "x":656,
+                 "y":660
                 }, 
                 {
                  "height":0,
                  "id":5,
                  "name":"",
                  "point":true,
+                 "properties":[
+                        {
+                         "name":"chamber",
+                         "type":"int",
+                         "value":2
+                        }, 
+                        {
+                         "name":"info",
+                         "type":"string",
+                         "value":"The main (and foremost) language used by the dungeon master. He use this language for (almost) every purpose, automating things, and much more."
+                        }, 
+                        {
+                         "name":"title",
+                         "type":"string",
+                         "value":"Python"
+                        }],
                  "rotation":0,
                  "type":"InfoDisplayer",
                  "visible":true,
                  "width":0,
-                 "x":654,
+                 "x":589,
                  "y":659
                 }, 
                 {
@@ -85,30 +117,78 @@
                  "id":6,
                  "name":"",
                  "point":true,
+                 "properties":[
+                        {
+                         "name":"chamber",
+                         "type":"int",
+                         "value":2
+                        }, 
+                        {
+                         "name":"info",
+                         "type":"string",
+                         "value":"If you can get him as your personal scripter (as a hobby) for your own custom Yu-Gi-Oh! card, you're good to go. This language is used just for that."
+                        }, 
+                        {
+                         "name":"title",
+                         "type":"string",
+                         "value":"Lua"
+                        }],
                  "rotation":0,
                  "type":"InfoDisplayer",
                  "visible":true,
                  "width":0,
-                 "x":718,
-                 "y":658
+                 "x":720,
+                 "y":659
                 }, 
                 {
                  "height":0,
                  "id":7,
                  "name":"",
                  "point":true,
+                 "properties":[
+                        {
+                         "name":"chamber",
+                         "type":"int",
+                         "value":2
+                        }, 
+                        {
+                         "name":"info",
+                         "type":"string",
+                         "value":"EVERYTHING should have a backup. And so does he.\nThis thing is the most popular version control system in this world, therefore he just goes with his trend."
+                        }, 
+                        {
+                         "name":"title",
+                         "type":"string",
+                         "value":"Git"
+                        }],
                  "rotation":0,
                  "type":"InfoDisplayer",
                  "visible":true,
                  "width":0,
-                 "x":721,
-                 "y":720
+                 "x":593,
+                 "y":785
                 }, 
                 {
                  "height":0,
                  "id":8,
                  "name":"",
                  "point":true,
+                 "properties":[
+                        {
+                         "name":"chamber",
+                         "type":"int",
+                         "value":2
+                        }, 
+                        {
+                         "name":"info",
+                         "type":"string",
+                         "value":"He's learning how to use these containers then ship it to his peers, allies,... whatever you call. "
+                        }, 
+                        {
+                         "name":"title",
+                         "type":"string",
+                         "value":"Docker"
+                        }],
                  "rotation":0,
                  "type":"InfoDisplayer",
                  "visible":true,
@@ -121,6 +201,22 @@
                  "id":9,
                  "name":"",
                  "point":true,
+                 "properties":[
+                        {
+                         "name":"chamber",
+                         "type":"int",
+                         "value":2
+                        }, 
+                        {
+                         "name":"info",
+                         "type":"string",
+                         "value":"You can ask him, the dungeon master. He is very friendly, and whenever there's a new tool, or language he has to use, he will certainly learn it, and learn it very fast, since his base is fortificated for years."
+                        }, 
+                        {
+                         "name":"title",
+                         "type":"string",
+                         "value":"More?"
+                        }],
                  "rotation":0,
                  "type":"InfoDisplayer",
                  "visible":true,
@@ -138,7 +234,7 @@
                  "visible":true,
                  "width":0,
                  "x":592,
-                 "y":370
+                 "y":358
                 }, 
                 {
                  "height":0,
@@ -149,8 +245,8 @@
                  "type":"InfoDisplayer",
                  "visible":true,
                  "width":0,
-                 "x":654,
-                 "y":369
+                 "x":655,
+                 "y":359
                 }, 
                 {
                  "height":0,
@@ -162,7 +258,7 @@
                  "visible":true,
                  "width":0,
                  "x":718,
-                 "y":368
+                 "y":359
                 }, 
                 {
                  "ellipse":true,
