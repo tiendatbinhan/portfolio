@@ -27,6 +27,7 @@ export class Preloader extends Scene
         this.load.spritesheet('treasureChests', 'sprites/treasureChests.png', {frameWidth: 32, frameHeight: 32})
         this.load.spritesheet('playerTextureIdle', 'sprites/player_idle.png', {frameWidth: 64, frameHeight: 64});
         this.load.spritesheet('playerTextureWalk', 'sprites/player_walk.png', {frameWidth: 64, frameHeight: 64});
+        this.load.spritesheet('deco', 'sprites/deco.png', {frameWidth: 32, frameHeight: 32})
 
         this.load.atlasXML('gui', 'ui/spritesheet-default.png', 'ui/spritesheet-default.xml');
         

@@ -229,6 +229,22 @@
                  "id":10,
                  "name":"",
                  "point":true,
+                 "properties":[
+                        {
+                         "name":"chamber",
+                         "type":"int",
+                         "value":3
+                        }, 
+                        {
+                         "name":"info",
+                         "type":"string",
+                         "value":"This dungeon itself is his recently great project. Here, he learns how to work with Git, applying the process of Gitflow, how to use the Docker, and how to work with TypeScript along with Phaser."
+                        }, 
+                        {
+                         "name":"title",
+                         "type":"string",
+                         "value":"This dungeon"
+                        }],
                  "rotation":0,
                  "type":"InfoDisplayer",
                  "visible":true,
@@ -241,6 +257,22 @@
                  "id":11,
                  "name":"",
                  "point":true,
+                 "properties":[
+                        {
+                         "name":"chamber",
+                         "type":"int",
+                         "value":3
+                        }, 
+                        {
+                         "name":"info",
+                         "type":"string",
+                         "value":"His best AI\/ML project of all time using Machine Learning and Genetic Algorithm; based on a paper. He is thinking about framing it to a real software."
+                        }, 
+                        {
+                         "name":"title",
+                         "type":"string",
+                         "value":"GA-Stacking for PdM"
+                        }],
                  "rotation":0,
                  "type":"InfoDisplayer",
                  "visible":true,
@@ -253,6 +285,22 @@
                  "id":12,
                  "name":"",
                  "point":true,
+                 "properties":[
+                        {
+                         "name":"chamber",
+                         "type":"int",
+                         "value":3
+                        }, 
+                        {
+                         "name":"info",
+                         "type":"string",
+                         "value":"This project demonstrates how he can use LLM in the API form, using Chain-of-Thought and Tree-of-Thoughts to experiment with Critical Questions Generation (CQs-Gen) problem."
+                        }, 
+                        {
+                         "name":"title",
+                         "type":"string",
+                         "value":"Adapt LLM for CQs-Gen"
+                        }],
                  "rotation":0,
                  "type":"InfoDisplayer",
                  "visible":true,
@@ -458,12 +506,22 @@
                  "name":"",
                  "properties":[
                         {
-                         "name":"type",
+                         "name":"chamber",
+                         "type":"int",
+                         "value":-1
+                        }, 
+                        {
+                         "name":"info",
                          "type":"string",
-                         "value":"tempclose"
+                         "value":"Dear the adventurer,\nThis chamber, according to our dungeon master's order, is temporary closed. This chamber is under construction; when it's ready, he will open it soon.\nWe apology for any issue caused by it, and thank you for understanding.\nSincerely."
+                        }, 
+                        {
+                         "name":"title",
+                         "type":"string",
+                         "value":"Temporarily closed"
                         }],
                  "rotation":0,
-                 "type":"Decorator",
+                 "type":"InfoDisplayer",
                  "visible":true,
                  "width":0,
                  "x":303,
@@ -528,6 +586,22 @@
                  "id":30,
                  "name":"",
                  "point":true,
+                 "properties":[
+                        {
+                         "name":"chamber",
+                         "type":"int",
+                         "value":4
+                        }, 
+                        {
+                         "name":"info",
+                         "type":"string",
+                         "value":"Email: 21520707@gm.uit.edu.vn\nPhone: +84 918 142 619"
+                        }, 
+                        {
+                         "name":"title",
+                         "type":"string",
+                         "value":"Basic info"
+                        }],
                  "rotation":0,
                  "type":"InfoDisplayer",
                  "visible":true,
@@ -541,6 +615,22 @@
                  "id":31,
                  "name":"",
                  "point":true,
+                 "properties":[
+                        {
+                         "name":"chamber",
+                         "type":"int",
+                         "value":4
+                        }, 
+                        {
+                         "name":"info",
+                         "type":"string",
+                         "value":"GitHub: tiendatbinhan\nLinkedIn: Tien-Dat Nguyen"
+                        }, 
+                        {
+                         "name":"title",
+                         "type":"string",
+                         "value":"Other links"
+                        }],
                  "rotation":0,
                  "type":"InfoDisplayer",
                  "visible":true,
